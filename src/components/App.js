@@ -7,6 +7,10 @@ import VideoDetail from "./VideoDetail";
 class App extends React.Component {
   state = { videos: [], selectedVideo: null };
 
+  componentDidMount() {
+    this.onTermSubmit("Homepage");
+  }
+
   onTermSubmit = async (term) => {
     const Response = await YtClient.get("/search", {
       params: {
@@ -14,7 +18,10 @@ class App extends React.Component {
       },
     });
 
-    this.setState({ videos: Response.data.items });
+    this.setState({
+      videos: Response.data.items,
+      selectedVideo: Response.data.items[0],
+    });
   };
 
   onVideoSelect = (video) => {
